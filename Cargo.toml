@@ -11,6 +11,7 @@ repository = "https://github.com/rust-av/v_frame"
 serialize = ["serde", "aligned-vec/serde"]
 profiling = ["dep:profiling"]
 tracing = ["profiling", "dep:tracing", "profiling/profile-with-tracing"]
+wasm = ["dep:wasm-bindgen", "dep:wasm-bindgen-test"]
 
 [dependencies]
 num-traits = "0.2"
@@ -52,7 +53,7 @@ criterion = { version = "0.5", default-features = false }
 
 # wasm-bindgen is only needed for wasm32-unknown-unknown and not other wasm32 targets
 [target.wasm32-unknown-unknown.dependencies]
-wasm-bindgen = "0.2"
+wasm-bindgen = { version = "0.2", optional = true }
 
 [target.wasm32-unknown-unknown.dev-dependencies]
-wasm-bindgen-test = "0.3"
+wasm-bindgen-test = { version = "0.3", optional = true }

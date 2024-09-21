@@ -10,7 +10,7 @@
 #[cfg(feature = "serialize")]
 use serde::{Deserialize, Serialize};
 
-#[cfg(all(target_arch = "wasm32", target_os = "unknown"))]
+#[cfg(all(target_arch = "wasm32", target_os = "unknown", feature = "wasm"))]
 use wasm_bindgen::prelude::*;
 
 use num_traits::{AsPrimitive, FromPrimitive, PrimInt, Signed};
@@ -149,7 +149,7 @@ impl Coefficient for i32 {
 /// Chroma subsampling format
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq)]
 #[cfg_attr(feature = "serialize", derive(Serialize, Deserialize))]
-#[cfg_attr(all(target_arch = "wasm32", target_os = "unknown"), wasm_bindgen)]
+#[cfg_attr(all(target_arch = "wasm32", target_os = "unknown", feature = "wasm"), wasm_bindgen)]
 #[repr(C)]
 pub enum ChromaSampling {
     /// Both vertically and horizontally subsampled.
@@ -237,7 +237,7 @@ mod test {
     #[cfg(all(target_arch = "wasm32", target_os = "unknown"))]
     wasm_bindgen_test_configure!(run_in_browser);
 
-    #[cfg_attr(all(target_arch = "wasm32", target_os = "unknown"), wasm_bindgen_test)]
+    #[cfg_attr(all(target_arch = "wasm32", target_os = "unknown", feature = "wasm"), wasm_bindgen_test)]
     #[test]
     fn asm_stride() {
         let tests = [(7, 7, 14), (12, 12, 24), (1234, 1234, 2468)];
@@ -248,14 +248,14 @@ mod test {
         }
     }
 
-    #[cfg_attr(all(target_arch = "wasm32", target_os = "unknown"), wasm_bindgen_test)]
+    #[cfg_attr(all(target_arch = "wasm32", target_os = "unknown", feature = "wasm"), wasm_bindgen_test)]
     #[test]
     fn type_enum() {
         assert!(u8::type_enum() == PixelType::U8);
         assert!(u16::type_enum() == PixelType::U16);
     }
 
-    #[cfg_attr(all(target_arch = "wasm32", target_os = "unknown"), wasm_bindgen_test)]
+    #[cfg_attr(all(target_arch = "wasm32", target_os = "unknown", feature = "wasm"), wasm_bindgen_test)]
     #[test]
     fn chroma_sampling_from_int() {
         let expected = [
@@ -276,7 +276,7 @@ mod test {
         }
     }
 
-    #[cfg_attr(all(target_arch = "wasm32", target_os = "unknown"), wasm_bindgen_test)]
+    #[cfg_attr(all(target_arch = "wasm32", target_os = "unknown", feature = "wasm"), wasm_bindgen_test)]
     #[test]
     fn display_chroma_sampling() {
         use std::fmt::Write;
@@ -295,7 +295,7 @@ mod test {
         }
     }
 
-    #[cfg_attr(all(target_arch = "wasm32", target_os = "unknown"), wasm_bindgen_test)]
+    #[cfg_attr(all(target_arch = "wasm32", target_os = "unknown"), feature = "wasm", wasm_bindgen_test)]
     #[test]
     fn chroma_sampling_dimensions() {
         let tests = [
